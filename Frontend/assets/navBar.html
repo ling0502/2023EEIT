@@ -1,0 +1,127 @@
+<style>
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    :root {
+        --main-color: PaleTurquoise;
+    }
+
+    a {
+        color: var(--bs-body-color);
+        text-decoration: none;
+    }
+
+    .toolBar {
+        height: 60px;
+    }
+
+    .toolBarRow {
+        min-height: 60px;
+        margin-top: -60px;
+    }
+
+    .content {
+        padding-top: 60px;
+        /* padding-bottom: 70px; */
+        background-color: #eee;
+    }
+
+    .cartBadge {
+        padding: 5px;
+        transform: translate(-8px, -15px);
+        line-height: 12px;
+    }
+
+    /* 頂端工具列(大視窗才顯示) */
+    .toolBarList {
+        flex: auto;
+        cursor: pointer;
+        z-index: 999;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 60px;
+    }
+
+    .toolBarList:hover {
+        background-color: var(--main-color);
+    }
+
+    .toolBarText {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: black;
+    }
+
+    @media (min-width: 576px) {
+        .p-innerPage {
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .p-innerPage {
+            padding-left: 12%;
+            padding-right: 12%;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .toolBarRow {
+            display: none;
+        }
+    }
+</style>
+<nav class="toolBar p-innerPage fixed-top bg-light">
+    <div class="text-center">
+        <img src="./assets/img/logo.png" alt="logo" width="60px">
+    </div>
+
+    <div class="row toolBarRow">
+        <div class="col-5 d-flex">
+            <a href="./index.html" class="toolBarList">
+                <div class="toolBarText">菜單</div>
+            </a>
+            <a href="./cart.html" class="toolBarList">
+                <div class="toolBarText">購物車
+                    <div class="cartBadge position-absolute badge rounded bg-danger" style="display:none">0</div>
+                </div>
+            </a>
+            <a href="./member.html" class="toolBarList">
+                <div class="toolBarText">優惠券</div>
+            </a>
+            <a href="./contact.html" class="toolBarList">
+                <div class="toolBarText">聯繫我們</div>
+            </a>
+        </div>
+
+        <div class="col-5"></div>
+
+        <div class="col-2 toolBarList justify-content-around">
+            <!-- 登入後 登入改會員 -->
+            <a href="./member.html" class="toolBarText">
+                <div class="toolBarText"><i class="fa-regular fa-circle-user fa-xl"></i> 登入</div>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<script>
+    $(function () {
+        let localstorageCart = JSON.parse(localStorage.getItem('productInfos'));
+        let cartNum = localstorageCart == null ? 0 : localstorageCart.length;
+
+        if (cartNum <= 0) {
+            $('.cartBadge').text(0);
+            $('.cartBadge').css('display', 'none');
+        } else {
+            $('.cartBadge').css('display', 'inline-block');
+            $('.cartBadge').text(cartNum);
+            console.log('else')
+        }
+    });
+
+</script>
