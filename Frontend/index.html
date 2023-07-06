@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>webDesign - drink</title>
+
+    <link rel="icon" href="./assets/img/favicon.png">
+
+    <!-- bootstrap5 - 前端框架 -->
+    <link href="./assets/src/plugins/bootstrap5.2/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- jquery 框架 -->
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <!-- <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> -->
+
+    <!-- slick - css輪播圖插件 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+
+    <!-- fontAwesome - icon插件 -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+    <link href="./assets/src/plugins/fontawesome/css/all.min.css" rel="stylesheet">
+
+    <!-- google MAP API -->
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWxMmSOrFAc2Qf5yEezArQw7Bzo94cIMo&callback=initMap&v=weekly"
+        defer></script>
+
+    <script src="./assets/src/data.js"></script>
+    <script type="module" src="./assets/src/main.js"></script>
+    <link rel="stylesheet" href="./assets/src/style.css">
+    <link rel="import" href="./assets/navBar.html">
+    <link rel="import" href="./assets/mobile-navBar.html">
+
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        .slick-slider,
+        .slick-list,
+        .slick-track {
+            max-height: 350px;
+        }
+
+        .loading {
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 9999;
+            justify-content: center;
+        }
+
+        .loading img {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- <div class="loading">
+        <img src="./assets/img/load.png">
+    </div> -->
+
+    <div id="toolBar"></div>
+    <script>
+        $(function () {
+            $('#toolBar').load('./assets/navBar.html');
+        });
+    </script>
+
+    <div class="content p-innerPage">
+        <div class="row mt-2 ">
+            <div class="col-12 col-lg-4 left pt-2 shadow d-flex flex-column" style="background-color: white;">
+                <div class="row mt-auto align-items-center">
+                    <div class="col-5 d-flex align-items-center justify-content-center">
+                        <img src="./assets/img/logo2.png">
+                    </div>
+
+                    <div class="col-7">
+                        <div class="text-center d-flex">
+                            <div class="px-2"><i class="fa-solid fa-map-pin"></i></div>
+                            <div><b>台中旗艦店</b></div>
+                        </div>
+                        <div class="text-center d-flex my-3">
+                            <div class="px-2"><i class="fa fa-clock"></i></div>
+                            <div><b>09:30 ~ 21:30</b></div>
+                        </div>
+                        <div class="text-center d-flex my-3">
+                            <div class="px-2"><i class="fa fa-phone"></i></div>
+                            <div><b> 04-123456789</b></div>
+                        </div>
+                        <div class="text-center d-flex my-3">
+                            <div class="px-2"><i class="fa fa-flag"></i></div>
+                            <div><b>台中市西區</b></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="rounded text-center mt-auto align-items-end d-flex justify-content-around"
+                    style="background-color: 	PaleTurquoise">
+                    <div class="moreInfo">
+                        <button type="button" class="btn" style="border:0" data-bs-toggle="modal"
+                            data-bs-target="#paymentModal">
+                            <div><i class="infoIcon fa-regular fa-credit-card"></i></div>
+                            <div> <b>支付方式</b> </div>
+                        </button>
+                        <div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content p-4">
+                                    <div class="closeBtn" data-bs-dismiss="modal" aria-label="Close"><i
+                                            class="fa-regular fa-circle-xmark fa-2xl"></i></div>
+                                    <img src="./assets/img/payment.png"></img>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="moreInfo">
+                        <button type="button" class="btn" style="border:0" data-bs-toggle="modal"
+                            data-bs-target="#deliverModal">
+                            <div> <i class="infoIcon fa-solid fa-motorcycle"></i></div>
+                            <div> <b>外送門檻</b> </div>
+                        </button>
+                        <div class="modal fade" id="deliverModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content p-4">
+                                    <div class="closeBtn" data-bs-dismiss="modal" aria-label="Close"><i
+                                            class="fa-regular fa-circle-xmark fa-2xl"></i></div>
+                                    <img src="./assets/img/deliver.png"></img>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="moreInfo">
+                        <button type="button" class="btn" style="border:0" data-bs-toggle="modal"
+                            data-bs-target="#branchModal">
+                            <div><i class="infoIcon fa-solid fa-location-dot"></i></div>
+                            <div> <b>其他分店</b> </div>
+                        </button>
+                        <div class="modal fade" id="branchModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content p-4">
+                                    <div class="closeBtn" data-bs-dismiss="modal" aria-label="Close"><i
+                                            class="fa-regular fa-circle-xmark fa-2xl"></i></div>
+                                    <div>
+                                        <label for="select-store">
+                                            <h4><b>分店選擇： </b></h4>
+                                        </label>
+                                        <select id="select-store">
+                                            <option value="Taoyuan">桃園分店</option>
+                                            <option value="Taichung" selected>台中旗艦店</option>
+                                            <option value="Tainan">台南分店</option>
+                                            <option value="Kaohsiung">高雄分店</option>
+                                        </select>
+                                        <div id="map" style="height: 400px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-8 right shadow">
+                <div class="slider m-auto" id="bannerSlider">
+                    <img class="d-block w-100" src="./assets/img/banner1.jpg">
+                    <img class="d-block w-100" src="./assets/img/banner2.jpg">
+                </div>
+            </div>
+        </div>
+
+        <div class="mainMenu row mt-4"> <!-- 
+            <div class="col-12 col-lg-4">
+                <div class="menublock shadow">
+                    <div class="menuTitle">純茶</div>
+                    <div class="products">
+                        <ul style="list-style-type:none;">
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p01.jpg" width="40px">
+                                    <b id="product-name">阿薩姆紅茶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>30</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p02.jpg" width="40px">
+                                    <b id="product-name">茉莉綠茶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>30</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p03.jpg" width="40px">
+                                    <b id="product-name">凍頂烏龍</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>30</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p04.jpg" width="40px">
+                                    <b id="product-name">黃金大麥</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>30</b></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <div class="menublock shadow">
+                    <div class="menuTitle">奶茶</div>
+                    <div>
+                        <ul style="list-style-type:none;">
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p05.jpg" width="40px">
+                                    <b id="product-name">熟成奶茶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>40</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p06.jpg" width="40px">
+                                    <b id="product-name">烏龍奶茶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>40</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p07.jpg" width="40px">
+                                    <b id="product-name">珍珠奶茶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>45</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p08.jpg" width="40px">
+                                    <b id="product-name">黑糖奶茶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>40</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p09.jpg" width="40px">
+                                    <b id="product-name">布丁奶茶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>50</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p10.jpg" width="40px">
+                                    <b id="product-name">阿華田</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>45</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p11.jpg" width="40px">
+                                    <b id="product-name">冰淇淋紅茶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1" style="visibility: hidden"></div>
+                                    <div class="price mx-2"><b>50</b></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <div class="menublock shadow">
+                    <div class="menuTitle">鮮奶</div>
+                    <div>
+                        <ul style="list-style-type:none;">
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p12.jpg" width="40px">
+                                    <b id="product-name">紅茶鮮奶茶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>55</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p13.jpg" width="40px">
+                                    <b id="product-name">蕎麥鮮奶茶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>55</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p14.jpg" width="40px">
+                                    <b id="product-name">仙草凍鮮奶茶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>60</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p15.jpg" width="40px">
+                                    <b id="product-name">小芋圓鮮奶茶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>60</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p16.jpg" width="40px">
+                                    <b id="product-name">冬瓜鮮奶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>55</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p17.jpg" width="40px">
+                                    <b id="product-name">黑糖波霸鮮奶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>65</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p18.jpg" width="40px">
+                                    <b id="product-name">可可鮮奶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>65</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p19.jpg" width="40px">
+                                    <b id="product-name">抹茶鮮奶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1"></div>
+                                    <div class="price mx-2"><b>65</b></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <div class="menublock shadow">
+                    <div class="menuTitle">果茶</div>
+                    <div>
+                        <ul style="list-style-type:none;">
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p20.jpg" width="40px">
+                                    <b id="product-name">冬瓜檸檬</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1" style="visibility: hidden"></div>
+                                    <div class="price mx-2"><b>40</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p21.jpg" width="40px">
+                                    <b id="product-name">翡翠檸檬</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1" style="visibility: hidden"></div>
+                                    <div class="price mx-2"><b>40</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p22.jpg" width="40px">
+                                    <b id="product-name">百香果綠茶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1" style="visibility: hidden"></div>
+                                    <div class="price mx-2"><b>40</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p23.jpg" width="40px">
+                                    <b id="product-name">柳橙綠茶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1" style="visibility: hidden"></div>
+                                    <div class="price mx-2"><b>55</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p24.jpg" width="40px">
+                                    <b id="product-name">葡萄柚蜜茶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1" style="visibility: hidden"></div>
+                                    <div class="price mx-2"><b>55</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p25.jpg" width="40px">
+                                    <b id="product-name">甘蔗青茶</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1"></div>
+                                    <div class="hot mx-1" style="visibility: hidden"></div>
+                                    <div class="price mx-2"><b>45</b></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <div class="menublock shadow">
+                    <div class="menuTitle">點點心</div>
+                    <div>
+                        <ul style="list-style-type:none;">
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p26.jpg" width="40px">
+                                    <b id="product-name">奶油紅豆餅</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1" style="visibility: hidden"></div>
+                                    <div class="hot mx-1" style="visibility: hidden"></div>
+                                    <div class="price mx-2"><b>30</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p27.jpg" width="40px">
+                                    <b id="product-name">豆沙紅豆餅</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1" style="visibility: hidden"></div>
+                                    <div class="hot mx-1" style="visibility: hidden"></div>
+                                    <div class="price mx-2"><b>30</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p28.jpg" width="40px">
+                                    <b id="product-name">芋頭紅豆餅</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1" style="visibility: hidden"></div>
+                                    <div class="hot mx-1" style="visibility: hidden"></div>
+                                    <div class="price mx-2"><b>30</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p29.jpg" width="40px">
+                                    <b id="product-name">玉米起司紅豆餅</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1" style="visibility: hidden"></div>
+                                    <div class="hot mx-1" style="visibility: hidden"></div>
+                                    <div class="price mx-2"><b>30</b></div>
+                                </div>
+                            </li>
+                            <li class="product">
+                                <div>
+                                    <img src="./assets/img/products/p30.jpg" width="40px">
+                                    <b id="product-name">OREO紅豆餅</b>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="cold mx-1" style="visibility: hidden"></div>
+                                    <div class="hot mx-1" style="visibility: hidden"></div>
+                                    <div class="price mx-2"><b>30</b></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        </div>
+
+        <div class="product_dialog" style="display: none;">
+            <div class="detail-block d-flex flex-column rounded-2">
+                <b class="title-block"></b>
+                <img src="" class="img-block w-100">
+
+                <div class="cup-block mt-4">
+                    <b>杯型</b>
+                    <div class="d-flex ps-3 py-2 mt-2">
+                        <button class="cust-option cup col-4 mx-1">M</button>
+                        <button class="cust-option cup col-4 mx-1">L</button>
+                    </div>
+                </div>
+
+                <div class="temp-block mt-4">
+                    <b>溫度</b>
+                    <div class="d-flex ps-3 py-2 mt-2">
+                        <button class="cust-option ice col-4 mx-1">正常冰</button>
+                        <button class="cust-option ice col-4 mx-1">少冰</button>
+                        <button class="cust-option ice col-4 mx-1">去冰</button>
+                    </div>
+                    <div class="d-flex ps-3 py-2">
+                        <button class="cust-option temperature col-4 mx-1">溫</button>
+                        <button class="cust-option temperature col-4 mx-1">熱</button>
+                    </div>
+                </div>
+
+                <div class="price-block mb-2 d-flex text-center mt-auto align-items-end">
+                    <div class="col-8">
+                        <div class="cust-unitPrice" style="display: none;">0</div>
+                        <b>總金額：</b><span class="cust-price">0</span>
+                        <div class="num-block d-flex justify-content-around">
+                            <button id="minus" class="num-btn"> - </button>
+                            <b class="cust-num">1</b>
+                            <button id="plus" class="num-btn"> + </button>
+                        </div>
+                    </div>
+                    <div class="col-4 h-100">
+                        <button id="confirm" class="d-block h-100 w-75 m-auto">訂購</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#" class="back-to-top align-items-center justify-content-center" style="display: none;">
+            <i class="fa-solid fa-circle-arrow-up fa-2xl"></i></a>
+            
+        <div id="mobile-toolBar"></div>
+        <script>
+            $(function () {
+                $('#mobile-toolBar').load('./assets/mobile-navBar.html');
+            });
+        </script>
+
+        <script>
+            $(function () {
+                $('#bannerSlider').slick({
+                    autoplay: true,
+                    autoplaySpeed: 3500,
+
+                    dots: true,
+                    arrows: true,
+                    prevArrow: '<button type="button" class="slick-prev bannerSlider-arrow-prev"></button>',
+                    nextArrow: '<button type="button" class="slick-next bannerSlider-arrow-next"></button>',
+
+                    infinite: true,
+                });
+            });
+
+            // ----- 分店資訊串接google MAP API -------start--------- //
+            let jsonObj = JSON.parse(json);
+
+            function geoLocation(latitude, longitude) {
+                let lat = parseFloat(latitude)
+                let lng = parseFloat(longitude)
+                return { lat: lat, lng: lng }
+            }
+            let map;
+            let marker;
+
+            function initMap() {
+                map = new google.maps.Map(document.getElementById("map"), {
+                    zoom: 8,
+                    center: geoLocation(
+                        jsonObj['store_branch'][1].latitude,
+                        jsonObj['store_branch'][1].longitude),
+                    mapId: '9164b05c2b2b3aa0'
+
+                });
+
+                marker = new google.maps.Marker({
+                    position: geoLocation(
+                        jsonObj['store_branch'][1].latitude,
+                        jsonObj['store_branch'][1].longitude),
+                    map: map,
+                });
+            }
+
+            $('#select-store').on('change', function () {
+                let value = $(this).val();
+                let newLatLng = null;
+
+                switch (value) {
+                    case "Taoyuan":
+                        newLatLng = geoLocation(
+                            jsonObj['store_branch'][0].latitude,
+                            jsonObj['store_branch'][0].longitude);
+                        break;
+                    case "Taichung":
+                        newLatLng = geoLocation(
+                            jsonObj['store_branch'][1].latitude,
+                            jsonObj['store_branch'][1].longitude);
+                        break;
+                    case "Tainan":
+                        newLatLng = geoLocation(
+                            jsonObj['store_branch'][2].latitude,
+                            jsonObj['store_branch'][2].longitude);
+                        break;
+                    case "Kaohsiung":
+                        newLatLng = geoLocation(
+                            jsonObj['store_branch'][3].latitude,
+                            jsonObj['store_branch'][3].longitude);
+                        break;
+                }
+
+                if (newLatLng) {
+                    // marker.setAnimation(google.maps.Animation.BOUNCE);
+                    marker.setPosition(newLatLng);
+                    map.setCenter(newLatLng);
+                    map.panTo(newLatLng, {animate:true, duration:3000});
+                    // setTimeout(() => {
+                    //     marker.setAnimation(null);
+                    // }, 1000);
+                }
+            })
+        // ----- 分店資訊串接google MAP API ---------end--------- //
+
+        </script>
+</body>
+
+</html>
