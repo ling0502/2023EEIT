@@ -3,6 +3,9 @@ var csrfHeaderName ;
 var csrfToken;
 var csrfToken;
 
+var currentSortColumn = '活動編號'; // 初始排序欄位
+var currentSortDirection = 'asc'; // 初始排序方向
+
 $(function() {
 	contextPath = $("meta[name='_contextPath']").attr("content"); 
 	csrfHeaderName = $("meta[name='_csrf_header']").attr("content");
@@ -45,33 +48,25 @@ $(function() {
     });
 
 	$(".activity-table th").on("click", function() {
-	  var columnName = $(this).text();
+	 	var columnName = $(this).text();
 	  
-	  var sortDirection = "asc";
-	  if ($(this).hasClass("sorted")) {
-	    sortDirection = $(this).hasClass("asc") ? "desc" : "asc";
-	  }
+		var sortDirection = "asc";
+		if ($(this).hasClass("sorted")) {
+		   sortDirection = $(this).hasClass("asc") ? "desc" : "asc";
+		}
 
-	  $.ajax({
-	    url: contextPath + '/resortActivity',
-	    type: "GET",
-	    data: {
-	      sortColumn: columnName,
-	      sortDirection: sortDirection
-	    },
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader(csrfHeaderName, csrfToken);
-        },
-	    success: function(response) {
-	    	generateActivityTable(response);
-	    	
-	    	$(".activity-table th").removeClass("sorted asc desc");
-			$(this).addClass("sorted " + sortDirection);
-	    },
-	    error: function(error) {
-	      console.error("活動排序失敗:" + error);
-	    }
-	  });
+		var currentPage = 1;
+		$('li.page-item').each(function() {
+		    if ($(this).hasClass('active')) {
+		        currentPage = $(this).text();
+		    }
+		})
+		
+		loadActivityData(columnName, sortDirection, currentPage)
+		
+    	$(".activity-table th").removeClass("sorted asc desc");
+		$(this).addClass("sorted " + sortDirection);
+	  
 	});
 	
 	// 活動類型 預設折扣 -> 不顯示贈禮
@@ -173,7 +168,7 @@ $(function() {
 	$('#activity-tabs').on('shown.bs.tab', function(e) {
 		var targetTab = $(e.target).attr('href');
 		if (targetTab === '#tab2') {
-			loadActivityData();
+			loadActivityData(currentSortColumn,currentSortDirection, 1);
 			loadCategoryData();
 		}else{
 			loadBannerData();
@@ -298,15 +293,21 @@ function loadDishInCategoryData(cid, did) {
 }
 
 // 讀取所有活動資料
-function loadActivityData(pageId) {
-	var pid = (pageId === undefined) ? 1 : pageId;
-	
+function loadActivityData(sortColumn, sortDirection, pageId) {
+	currentSortColumn = sortColumn;
+    currentSortDirection = sortDirection;
+
 	$.ajax({
-		url : contextPath + '/queryActivity?pageNumber=' + pid,
+		url : contextPath + '/queryActivity',
 		type : 'GET',
         beforeSend: function(xhr) {
             xhr.setRequestHeader(csrfHeaderName, csrfToken);
         },
+        data: {
+	       sortColumn: currentSortColumn,
+           sortDirection: currentSortDirection,
+	       pageNumber: pageId
+	    },
 		success : function(response) {
 			console.log("--------------ajax-Activity"+response.number);
 			console.log(response);
@@ -359,9 +360,9 @@ function generatePagination(totalPages, currentPage){
 	htmlContent += '<li class="page-item"><a class="page-link" onclick="changePage(\'prev\', ' + totalPages + ', ' + currentPage + ')">&laquo;</a></li>';
 	for (var i = 1; i <= totalPages; i++) {
         if (i == currentPage) {
-            htmlContent += '<li class="page-item active"><a class="page-link" onclick="loadActivityData(' + i + ')">' + i + '</a></li>';
+            htmlContent += '<li class="page-item active"><a class="page-link" onclick="loadActivityData(\'' + currentSortColumn + '\', \'' + currentSortDirection + '\', ' + i + ')">' + i + '</a></li>';
         } else {
-            htmlContent += '<li class="page-item"><a class="page-link" onclick="loadActivityData(' + i + ')">' + i + '</a></li>';
+            htmlContent += '<li class="page-item"><a class="page-link" onclick="loadActivityData(\'' + currentSortColumn + '\', \'' + currentSortDirection + '\', ' + i + ')">' + i + '</a></li>';
         }
     }
 	htmlContent+='<li class="page-item"><a class="page-link" onclick="changePage(\'next\', ' + totalPages + ', ' + currentPage + ')">&raquo;</a></li>';
@@ -382,7 +383,7 @@ function changePage(option,totalPages, currentPage){
 		return
 	}
 	
-	loadActivityData(newPage);
+	loadActivityData(currentSortColumn,currentSortDirection, newPage);
 }
 
 // 開啟互動視窗 - 刪除輪播圖 
@@ -582,7 +583,7 @@ function sendActivityData() {
         },
 		success : function() {
 			$('#activity-modal').modal('hide');
-			loadActivityData();
+			loadActivityData(currentSortColumn,currentSortDirection, 1);
 		},
 		error : function(error) {
 			console.log('活動保存失敗:', error);
@@ -620,7 +621,7 @@ function deleteActivity(id) {
         success: function () {
             console.log("--------------ajax-deleteActivity");
             $('#delete-modal').modal('hide');
-            loadActivityData();
+            loadActivityData(currentSortColumn,currentSortDirection, 1);
         },
         error: function (error) {
             console.log('輪播圖刪除失敗:', error);
