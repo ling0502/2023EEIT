@@ -115,7 +115,7 @@ function restoreBlockTopStyle(element) {
 
 // ------- div > mainMenu 裡面的資料從JSON取得 -------start--------- //
 $(function () {
-    let url = "https://raw.githubusercontent.com/ling0502/EEIT64/main/assets/src/testData.json";
+    let url = "https://raw.githubusercontent.com/ling0502/2023EEIT/main/Frontend/assets/src/testData.json";
 
     $.ajax({
         url: url,
